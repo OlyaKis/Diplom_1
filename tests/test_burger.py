@@ -67,20 +67,32 @@ class TestBurger:
             burger.get_receipt()
         assert "get_name" in str(exc_info.value)
 
-    def test_remove_ingredient_invalid_index(self, ingredient_mock):
+    def test_remove_ingredient_invalid_index_raises(self, ingredient_mock):
         burger = Burger()
         burger.add_ingredient(ingredient_mock)
         with pytest.raises(IndexError) as exc_info:
             burger.remove_ingredient(5)
-        assert isinstance(exc_info.value, IndexError)
+        assert exc_info.value is not None
+
+    def test_remove_ingredient_invalid_index_message(self, ingredient_mock):
+        burger = Burger()
+        burger.add_ingredient(ingredient_mock)
+        with pytest.raises(IndexError) as exc_info:
+            burger.remove_ingredient(5)
         assert "index out of range" in str(exc_info.value).lower()
 
-    def test_move_ingredient_invalid_index(self, ingredient_mock):
+    def test_move_ingredient_invalid_index_raises(self, ingredient_mock):
         burger = Burger()
         burger.add_ingredient(ingredient_mock)
         with pytest.raises(IndexError) as exc_info:
             burger.move_ingredient(5, 0)
-        assert isinstance(exc_info.value, IndexError)
+        assert exc_info.value is not None
+
+    def test_move_ingredient_invalid_index_message(self, ingredient_mock):
+        burger = Burger()
+        burger.add_ingredient(ingredient_mock)
+        with pytest.raises(IndexError) as exc_info:
+            burger.move_ingredient(5, 0)
         assert "index out of range" in str(exc_info.value).lower()
 
     def test_get_receipt_contains_mayo(self, bun_mock):
